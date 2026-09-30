@@ -447,6 +447,13 @@ python3 scripts/cashflow_yearly.py
             f"=> end={r.dep_end:,.0f} | iis_end={r.iis_end:,.0f} | chk={r.check_dep():.2f}"
         )
 
+    try:
+        from generate_dashboard import main as gen_dash
+
+        gen_dash()
+    except Exception as exc:  # noqa: BLE001
+        print("dashboard skip:", exc)
+
 
 if __name__ == "__main__":
     main()

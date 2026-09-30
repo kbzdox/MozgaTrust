@@ -14,4 +14,12 @@
 
 ```bash
 python3 scripts/cashflow_yearly.py
+python3 scripts/generate_dashboard.py
 ```
+
+## Дашборд для семьи
+
+Крупный понятный экран (удобно показать старшим):
+
+- открыть [`dashboard/index.html`](../dashboard/index.html) в браузере  
+  или локально: `python3 -m http.server 8765 --directory dashboard`

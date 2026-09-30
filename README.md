@@ -14,6 +14,7 @@
 | [data/v1_rent_now.csv](data/v1_rent_now.csv) | CSV сценария V1 |
 | [data/v2_rent_after_3y.csv](data/v2_rent_after_3y.csv) | CSV сценария V2 |
 | [scripts/cashflow_yearly.py](scripts/cashflow_yearly.py) | Генерация таблиц |
+| [dashboard/index.html](dashboard/index.html) | Понятный дашборд для семьи (крупный шрифт) |
 
 ## Краткий расклад
 

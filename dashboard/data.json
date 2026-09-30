@@ -1,0 +1,296 @@
+{
+  "v1": {
+    "key": "v1",
+    "title": "Пенсия сразу",
+    "dep0": 11715361,
+    "iis0": 8284639,
+    "pension_from_month": 1,
+    "total_2040": 23336529,
+    "total_pension": 18000000,
+    "total_tax": 2798895,
+    "years": [
+      {
+        "year": 2026,
+        "dep_end": 11821255,
+        "iis_end": 9759869,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 174214,
+        "total": 21581124
+      },
+      {
+        "year": 2027,
+        "dep_end": 11997339,
+        "iis_end": 11497790,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 176932,
+        "total": 23495129
+      },
+      {
+        "year": 2028,
+        "dep_end": 2135717,
+        "iis_end": 13545180,
+        "pension": 1200000,
+        "lump": 10000000,
+        "tax": 179068,
+        "total": 15680897
+      },
+      {
+        "year": 2029,
+        "dep_end": 1138017,
+        "iis_end": 15957145,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 9309,
+        "total": 17095162
+      },
+      {
+        "year": 2030,
+        "dep_end": 17514,
+        "iis_end": 18798604,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 0,
+        "total": 18816118
+      },
+      {
+        "year": 2031,
+        "dep_end": 19125779,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 204662,
+        "total": 19125779
+      },
+      {
+        "year": 2032,
+        "dep_end": 19460713,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 208438,
+        "total": 19460713
+      },
+      {
+        "year": 2033,
+        "dep_end": 19822980,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 212523,
+        "total": 19822980
+      },
+      {
+        "year": 2034,
+        "dep_end": 20214813,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 216941,
+        "total": 20214813
+      },
+      {
+        "year": 2035,
+        "dep_end": 20638625,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 221719,
+        "total": 20638625
+      },
+      {
+        "year": 2036,
+        "dep_end": 21097024,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 226887,
+        "total": 21097024
+      },
+      {
+        "year": 2037,
+        "dep_end": 21592834,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 232477,
+        "total": 21592834
+      },
+      {
+        "year": 2038,
+        "dep_end": 22129109,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 238524,
+        "total": 22129109
+      },
+      {
+        "year": 2039,
+        "dep_end": 22709150,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 245064,
+        "total": 22709150
+      },
+      {
+        "year": 2040,
+        "dep_end": 23336529,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 252137,
+        "total": 23336529
+      }
+    ]
+  },
+  "v2": {
+    "key": "v2",
+    "title": "Пенсия через 3 года",
+    "dep0": 8659231,
+    "iis0": 11340769,
+    "pension_from_month": 37,
+    "total_2040": 38532865,
+    "total_pension": 14400000,
+    "total_tax": 3952133,
+    "years": [
+      {
+        "year": 2026,
+        "dep_end": 9674991,
+        "iis_end": 13360198,
+        "pension": 0,
+        "lump": 0,
+        "tax": 130861,
+        "total": 23035190
+      },
+      {
+        "year": 2027,
+        "dep_end": 10865760,
+        "iis_end": 15739224,
+        "pension": 0,
+        "lump": 0,
+        "tax": 149241,
+        "total": 26604984
+      },
+      {
+        "year": 2028,
+        "dep_end": 2135717,
+        "iis_end": 18541878,
+        "pension": 0,
+        "lump": 10000000,
+        "tax": 168844,
+        "total": 20677595
+      },
+      {
+        "year": 2029,
+        "dep_end": 1138017,
+        "iis_end": 21843596,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 9309,
+        "total": 22981612
+      },
+      {
+        "year": 2030,
+        "dep_end": 17514,
+        "iis_end": 25733244,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 0,
+        "total": 25750758
+      },
+      {
+        "year": 2031,
+        "dep_end": 26626369,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 289229,
+        "total": 26626369
+      },
+      {
+        "year": 2032,
+        "dep_end": 27573440,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 299907,
+        "total": 27573440
+      },
+      {
+        "year": 2033,
+        "dep_end": 28597804,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 311457,
+        "total": 28597804
+      },
+      {
+        "year": 2034,
+        "dep_end": 29705768,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 323949,
+        "total": 29705768
+      },
+      {
+        "year": 2035,
+        "dep_end": 30904155,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 337460,
+        "total": 30904155
+      },
+      {
+        "year": 2036,
+        "dep_end": 32200345,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 352074,
+        "total": 32200345
+      },
+      {
+        "year": 2037,
+        "dep_end": 33602320,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 367881,
+        "total": 33602320
+      },
+      {
+        "year": 2038,
+        "dep_end": 35118712,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 384978,
+        "total": 35118712
+      },
+      {
+        "year": 2039,
+        "dep_end": 36758860,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 403470,
+        "total": 36758860
+      },
+      {
+        "year": 2040,
+        "dep_end": 38532865,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 423472,
+        "total": 38532865
+      }
+    ]
+  }
+}
