@@ -216,8 +216,11 @@
 
 ## 9. Связанные файлы
 
+- [CASHFLOW.md](CASHFLOW.md) — детальный кэшфлоу по годам и графики
 - [ASSUMPTIONS.md](ASSUMPTIONS.md) — источники ставок и правил
 - [../data/scenarios.csv](../data/scenarios.csv) — таблица сценариев
+- [../data/cashflow_base.csv](../data/cashflow_base.csv) — кэшфлоу путь A
 - [../scripts/calc_plan.py](../scripts/calc_plan.py) — пересчёт
+- [../scripts/cashflow_yearly.py](../scripts/cashflow_yearly.py) — генерация кэшфлоу
 
 *Модель иллюстративная. Не является индивидуальной инвестиционной рекомендацией.*
