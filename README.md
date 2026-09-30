@@ -7,10 +7,11 @@
 | Файл | Содержание |
 | --- | --- |
 | [plan/INVESTMENT_PLAN.md](plan/INVESTMENT_PLAN.md) | Основной план: аллокация, фазы, денежные потоки, ИИС-3, риски |
-| [plan/CASHFLOW.md](plan/CASHFLOW.md) | Детальный кэшфлоу 2026–2040 + графики |
+| [plan/CASHFLOW.md](plan/CASHFLOW.md) | Кэшфлоу 2026–2040: два варианта ренты 100к/мес |
 | [plan/ASSUMPTIONS.md](plan/ASSUMPTIONS.md) | Рыночные опоры (ставки ЦБ, ОФЗ, правила ИИС-3) на сентябрь 2026 |
 | [data/scenarios.csv](data/scenarios.csv) | Сводные сценарии доходности |
-| [data/cashflow_base.csv](data/cashflow_base.csv) | Кэшфлоу путь A (ИИС → 2031) |
+| [data/cashflow_v1_rent_now.csv](data/cashflow_v1_rent_now.csv) | Вариант 1: 100к/мес сразу |
+| [data/cashflow_v2_rent_after_3y.csv](data/cashflow_v2_rent_after_3y.csv) | Вариант 2: 100к/мес после 3 лет |
 | [scripts/calc_plan.py](scripts/calc_plan.py) | Пересчёт сценариев |
 | [scripts/cashflow_yearly.py](scripts/cashflow_yearly.py) | Генерация кэшфлоу и PNG |
 
