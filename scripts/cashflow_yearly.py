@@ -13,8 +13,10 @@
 - НДФЛ с %% вкладов платится в конце каждого года; по ИИС до закрытия 0.
 
 Сценарии:
-  V1 — пенсия с месяца 1
-  V2 — пенсия с месяца 37
+  V1 — депозит + ИИС, пенсия с месяца 1
+  V2 — депозит + ИИС, пенсия с месяца 37
+  V3a — только депозит, пенсия с месяца 1
+  V3b — только депозит, пенсия с месяца 37
 """
 
 from __future__ import annotations
@@ -98,6 +100,7 @@ class YearRow:
 def simulate(dep0: float, pension_from_month: int) -> list[YearRow]:
     dep = dep0
     iis = TOTAL - dep0
+    has_iis = iis > 1.0
     rows: list[YearRow] = []
 
     for year in range(START_YEAR, 2041):
@@ -106,7 +109,7 @@ def simulate(dep0: float, pension_from_month: int) -> list[YearRow]:
         dep_interest = iis_interest = 0.0
         pension = lump = 0.0
         shortfall = 0.0
-        refund = IIS_REFUND if year == 2027 else 0.0
+        refund = IIS_REFUND if (year == 2027 and has_iis) else 0.0
         from_iis = 0.0
 
         if year == CLOSE_YEAR and iis > 0:
@@ -306,14 +309,43 @@ def write_md(
     rows: list[YearRow],
     csv_name: str,
     pension_from_month: int,
+    deposit_only: bool = False,
 ) -> None:
     iis0 = TOTAL - dep0
     y28 = next(r for r in rows if r.year == 2028)
-    text = f"""# {title}
+    if deposit_only:
+        split = f"""## Старт: куда кладём 20 млн
 
-{blurb}
+| | Сумма | Доля |
+| --- | ---: | ---: |
+| Депозит | **{rub(dep0)}** | 100% |
+| ИИС / ОФЗ | **0** | 0% |
+| Итого | {rub(TOTAL)} | 100% |
 
-## Старт: как делим 20 млн
+Вариант без ОФЗ и без ИИС: весь капитал на банковских вкладах (лестница по ставкам ЦБ).
+Те же цели — изъятие **10 млн** через 3 года и пенсия **100к/мес** — но без «второго двигателя» на 16,5%.
+"""
+        how = """## Как считается каждый год
+
+Помесячно внутри года:
+
+1. На депозит капают проценты  
+2. Если пенсия уже началась — снимается **100 000**  
+3. В месяце 36 (дек 2028) — доп. изъятие **10 000 000**  
+4. В конце года платится НДФЛ с процентов  
+
+**Формула депозита (проверка в таблице = OK):**
+
+```text
+Конец = Начало + Проценты − НДФЛ − Пенсия_за_год − Доп_изъятие
+```
+
+Пенсия начинается с месяца **{pension_from_month}**.  
+Ставка депозита: 12,5% годовых до 2030 / 9% с 2031 (в модели как APR/12 каждый месяц).  
+НДФЛ вкладов: 13% с процентов сверх {tax_free}. Вычета ИИС нет.
+""".format(pension_from_month=pension_from_month, tax_free=rub(TAX_FREE))
+    else:
+        split = f"""## Старт: как делим 20 млн
 
 | | Сумма | Доля |
 | --- | ---: | ---: |
@@ -325,8 +357,8 @@ def write_md(
 1) в декабре 2028 снимается **ровно 10 млн**,
 2) пенсия **100к/мес** не обрывается до закрытия ИИС (начало 2031),
 3) всё остальное едет на ИИС (там доходность выше → максимальный рост за первые 3 года).
-
-## Как считается каждый год
+"""
+        how = f"""## Как считается каждый год
 
 Помесячно внутри года:
 
@@ -344,7 +376,14 @@ def write_md(
 Пенсия начинается с месяца **{pension_from_month}**.  
 Ставка депозита: 12,5% годовых до 2030 / 9% с 2031 (в модели как APR/12 каждый месяц).  
 НДФЛ вкладов: 13% с процентов сверх {rub(TAX_FREE)}. НДФЛ ИИС до закрытия: **0**.
+"""
 
+    text = f"""# {title}
+
+{blurb}
+
+{split}
+{how}
 ## Таблица
 
 {md_table(rows)}
@@ -370,20 +409,107 @@ python3 scripts/cashflow_yearly.py
     print("Wrote", path)
 
 
+def summary_line(label: str, dep0: float, rows: list[YearRow]) -> dict:
+    y28 = next(r for r in rows if r.year == 2028)
+    return {
+        "label": label,
+        "dep0": dep0,
+        "iis0": TOTAL - dep0,
+        "dep_end_2028": y28.dep_end,
+        "iis_end_2028": y28.iis_end,
+        "pension": sum(r.dep_pension for r in rows),
+        "tax": sum(r.dep_ndfl for r in rows),
+        "total_2040": rows[-1].total_end,
+        "shortfall": sum(r.pension_shortfall for r in rows),
+    }
+
+
+def write_compare_md(path: Path, summaries: list[dict]) -> None:
+    rows = []
+    for s in summaries:
+        rows.append(
+            "| "
+            + " | ".join(
+                [
+                    s["label"],
+                    rub(s["dep0"]),
+                    rub(s["iis0"]),
+                    rub(s["dep_end_2028"]),
+                    rub(s["iis_end_2028"]),
+                    rub(s["pension"]),
+                    rub(s["tax"]),
+                    f"**{rub(s['total_2040'])}**",
+                ]
+            )
+            + " |"
+        )
+    v1 = next(s for s in summaries if s["label"].startswith("V1"))
+    v2 = next(s for s in summaries if s["label"].startswith("V2"))
+    v3a = next(s for s in summaries if s["label"].startswith("V3a"))
+    v3b = next(s for s in summaries if s["label"].startswith("V3b"))
+    text = f"""# Сценарий V3 — только депозит (без ОФЗ / ИИС)
+
+Весь капитал **20 млн** лежит на банковских вкладах. ОФЗ и ИИС-3 не используем.
+Те же цели: изъятие **10 млн** в декабре 2028 и пенсия **100 тыс. ₽/мес**.
+
+Два подрежима по дате старта пенсии (чтобы сравнивать с V1 и V2 честно):
+
+| Подрежим | Пенсия | Отчёт / CSV |
+| --- | --- | --- |
+| **V3a** | с 1-го месяца | таблица ниже · [`v3a_deposit_only_rent_now.csv`](../data/v3a_deposit_only_rent_now.csv) |
+| **V3b** | после 3 лет (с 37-го месяца) | таблица ниже · [`v3b_deposit_only_rent_after_3y.csv`](../data/v3b_deposit_only_rent_after_3y.csv) |
+
+Ставка депозита та же: **12,5%** до 2030 / **9%** с 2031. НДФЛ 13% с %% сверх {rub(TAX_FREE)}. Вычета ИИС нет.
+
+## Сравнение всех вариантов
+
+| Сценарий | Депозит старт | ИИС старт | Депозит конец 2028 | ИИС конец 2028 | Пенсия всего | НДФЛ | Капитал 2040 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+{chr(10).join(rows)}
+
+### Что видно из цифр
+
+- **Без ОФЗ цели выполняются** (10 млн снимаются, пенсия без дыр), но к 2040 капитал заметно тоньше.
+- Пенсия сразу: V1 (с ИИС) **{rub(v1['total_2040'])}** vs V3a (только вклад) **{rub(v3a['total_2040'])}** → ИИС даёт примерно **+{rub(v1['total_2040'] - v3a['total_2040'])}** к 2040.
+- Пенсия после 3 лет: V2 **{rub(v2['total_2040'])}** vs V3b **{rub(v3b['total_2040'])}** → ИИС даёт примерно **+{rub(v2['total_2040'] - v3b['total_2040'])}** к 2040.
+- V3b (~{rub(v3b['total_2040'])}) всё же чуть богаче V1 (~{rub(v1['total_2040'])}): отложить пенсию на 3 года на одном только вкладе почти догоняет схему «пенсия сразу + ИИС», но до V2 далеко.
+- На участке 2029–2030 у V1/V2 депозит почти съеден (ждут перевода ИИС); у V3 подушка на вкладе толще сразу после −10 млн — зато нет рывка в 2031.
+
+Подробные годовые таблицы: [CASHFLOW_V3a.md](CASHFLOW_V3a.md), [CASHFLOW_V3b.md](CASHFLOW_V3b.md).
+Индекс: [CASHFLOW.md](CASHFLOW.md).
+
+```bash
+python3 scripts/cashflow_yearly.py
+```
+"""
+    path.write_text(text, encoding="utf-8")
+    print("Wrote", path)
+
+
 def main() -> None:
     dep_v1 = find_min_dep0(pension_from_month=1)
     dep_v2 = find_min_dep0(pension_from_month=37)
     # небольшой запас 10к на округления месяцев
     dep_v1 = min(TOTAL, dep_v1 + 10_000)
     dep_v2 = min(TOTAL, dep_v2 + 10_000)
+    dep_v3 = TOTAL  # только депозит
 
     rows_v1 = simulate(dep_v1, 1)
     rows_v2 = simulate(dep_v2, 37)
+    rows_v3a = simulate(dep_v3, 1)
+    rows_v3b = simulate(dep_v3, 37)
 
-    print(f"V1 dep0={dep_v1:,.0f} iis0={TOTAL-dep_v1:,.0f} ok={allocation_ok(rows_v1)}")
-    print(f"V2 dep0={dep_v2:,.0f} iis0={TOTAL-dep_v2:,.0f} ok={allocation_ok(rows_v2)}")
+    print(f"V1  dep0={dep_v1:,.0f} iis0={TOTAL-dep_v1:,.0f} ok={allocation_ok(rows_v1)}")
+    print(f"V2  dep0={dep_v2:,.0f} iis0={TOTAL-dep_v2:,.0f} ok={allocation_ok(rows_v2)}")
+    print(f"V3a dep0={dep_v3:,.0f} iis0=0 ok={allocation_ok(rows_v3a)}")
+    print(f"V3b dep0={dep_v3:,.0f} iis0=0 ok={allocation_ok(rows_v3b)}")
 
-    for tag, rows in ("V1", rows_v1), ("V2", rows_v2):
+    for tag, rows in (
+        ("V1", rows_v1),
+        ("V2", rows_v2),
+        ("V3a", rows_v3a),
+        ("V3b", rows_v3b),
+    ):
         fails = [r.year for r in rows if abs(r.check_dep()) >= 1 or abs(r.check_iis()) >= 1]
         short = [r.year for r in rows if r.pension_shortfall > 1]
         print(tag, "check_fail_years", fails, "pension_short_years", short)
@@ -391,6 +517,8 @@ def main() -> None:
     DATA.mkdir(exist_ok=True)
     write_csv(DATA / "v1_rent_now.csv", rows_v1, dep_v1, "V1")
     write_csv(DATA / "v2_rent_after_3y.csv", rows_v2, dep_v2, "V2")
+    write_csv(DATA / "v3a_deposit_only_rent_now.csv", rows_v3a, dep_v3, "V3a")
+    write_csv(DATA / "v3b_deposit_only_rent_after_3y.csv", rows_v3b, dep_v3, "V3b")
     write_csv(DATA / "cashflow_v1_rent_now.csv", rows_v1, dep_v1, "V1")
     write_csv(DATA / "cashflow_v2_rent_after_3y.csv", rows_v2, dep_v2, "V2")
     write_csv(DATA / "cashflow_base.csv", rows_v2, dep_v2, "V2")
@@ -416,36 +544,72 @@ def main() -> None:
         csv_name="v2_rent_after_3y.csv",
         pension_from_month=37,
     )
+    write_md(
+        PLAN / "CASHFLOW_V3a.md",
+        title="Сценарий V3a — только депозит, пенсия сразу",
+        blurb="**Без ОФЗ и ИИС.** Все **20 млн** на вкладах. Пенсию **100 000 ₽/мес** снимаем **с первого месяца**. "
+        "Через 3 года дополнительно вынимаем **10 млн**.",
+        dep0=dep_v3,
+        rows=rows_v3a,
+        csv_name="v3a_deposit_only_rent_now.csv",
+        pension_from_month=1,
+        deposit_only=True,
+    )
+    write_md(
+        PLAN / "CASHFLOW_V3b.md",
+        title="Сценарий V3b — только депозит, пенсия после 3 лет",
+        blurb="**Без ОФЗ и ИИС.** Все **20 млн** на вкладах. Первые **3 года** пенсия **0** — полная капитализация. "
+        "В конце 3-го года снимаем **10 млн**. С 37-го месяца — **100 000 ₽/мес**.",
+        dep0=dep_v3,
+        rows=rows_v3b,
+        csv_name="v3b_deposit_only_rent_after_3y.csv",
+        pension_from_month=37,
+        deposit_only=True,
+    )
+
+    summaries = [
+        summary_line("V1 — вклад+ИИС, пенсия сразу", dep_v1, rows_v1),
+        summary_line("V2 — вклад+ИИС, пенсия после 3 лет", dep_v2, rows_v2),
+        summary_line("V3a — только вклад, пенсия сразу", dep_v3, rows_v3a),
+        summary_line("V3b — только вклад, пенсия после 3 лет", dep_v3, rows_v3b),
+    ]
+    write_compare_md(PLAN / "CASHFLOW_V3.md", summaries)
 
     (PLAN / "CASHFLOW.md").write_text(
         """# Кэшфлоу
 
-База **20 млн** делится между депозитом и ИИС так, чтобы за первые 3 года выжать максимум роста на ИИС, но:
+База **20 млн**. Два семейства сценариев:
 
-- в декабре 2028 с депозита снималось **ровно 10 млн**;
-- пенсия **100к/мес** не обрывалась, пока ИИС закрыт для вывода.
+1. **Депозит + ИИС (ОФЗ)** — долю подбираем под макс. рост на ИИС при условиях:
+   - в декабре 2028 с депозита снимается **ровно 10 млн**;
+   - пенсия **100к/мес** не обрывается, пока ИИС закрыт для вывода.
+2. **Только депозит (V3)** — все 20 млн на вкладах, без ОФЗ/ИИС; те же изъятие и пенсия.
 
-Пенсия и изъятие **реально вычитаются** из депозита каждый месяц/в момент события. В таблице есть колонка **Проверка** (формула конца депозита).
+Пенсия и изъятие **реально вычитаются** из депозита. В таблице есть колонка **Проверка**.
 
-| Сценарий | Отчёт | Пенсия |
-| --- | --- | --- |
-| **V1** | [CASHFLOW_V1.md](CASHFLOW_V1.md) | с 1-го месяца |
-| **V2** | [CASHFLOW_V2.md](CASHFLOW_V2.md) | после 3 лет (с 37-го месяца) |
+| Сценарий | Отчёт | Инструменты | Пенсия |
+| --- | --- | --- | --- |
+| **V1** | [CASHFLOW_V1.md](CASHFLOW_V1.md) | вклад + ИИС | с 1-го месяца |
+| **V2** | [CASHFLOW_V2.md](CASHFLOW_V2.md) | вклад + ИИС | после 3 лет |
+| **V3** | [CASHFLOW_V3.md](CASHFLOW_V3.md) | только вклад | сравнение V3a/V3b с V1/V2 |
+| **V3a** | [CASHFLOW_V3a.md](CASHFLOW_V3a.md) | только вклад | с 1-го месяца |
+| **V3b** | [CASHFLOW_V3b.md](CASHFLOW_V3b.md) | только вклад | после 3 лет |
 
 ```bash
 python3 scripts/cashflow_yearly.py
+python3 scripts/generate_dashboard.py
 ```
+
+## Дашборд для семьи
+
+- [`dashboard/index.html`](../dashboard/index.html)
+- локально: `python3 -m http.server 8765 --directory dashboard`
 """,
         encoding="utf-8",
     )
 
-    print("\nV1 ledger:")
-    for r in rows_v1:
-        print(
-            f"{r.year}: start={r.dep_start:,.0f} +%={r.dep_interest:,.0f} -tax={r.dep_ndfl:,.0f} "
-            f"-pens={r.dep_pension:,.0f} -lump={r.dep_lump:,.0f} +iis={r.dep_from_iis:,.0f} "
-            f"=> end={r.dep_end:,.0f} | iis_end={r.iis_end:,.0f} | chk={r.check_dep():.2f}"
-        )
+    for tag, rows in ("V3a", rows_v3a), ("V3b", rows_v3b):
+        print(f"\n{tag} capital 2040: {rows[-1].total_end:,.0f}")
 
     try:
         from generate_dashboard import main as gen_dash
@@ -457,3 +621,4 @@ python3 scripts/cashflow_yearly.py
 
 if __name__ == "__main__":
     main()
+

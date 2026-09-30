@@ -67,6 +67,16 @@
       .chooser { grid-template-columns: 1fr; }
       .hero-facts, .split { grid-template-columns: 1fr !important; }
     }
+    .choice .tag {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: #023018;
+    }
+    .choice.active .tag { color: #ff9a1a; }
     .choice {
       border: 4px solid #000;
       background: #fff;
@@ -243,13 +253,25 @@
     <p class="lead">План на 20 миллионов простыми словами: куда положить, сколько получать каждый месяц и что останется.</p>
 
     <div class="chooser" role="tablist" aria-label="Выбор варианта">
-      <button class="choice active" id="btn-v1" type="button">
+      <button class="choice active" id="btn-v1" type="button" data-key="v1">
+        <span class="tag">Вклад + ИИС</span>
         <strong>Вариант 1 — пенсия сразу</strong>
         <small>100 тысяч ₽ каждый месяц с первого месяца</small>
       </button>
-      <button class="choice" id="btn-v2" type="button">
+      <button class="choice" id="btn-v2" type="button" data-key="v2">
+        <span class="tag">Вклад + ИИС</span>
         <strong>Вариант 2 — пенсия через 3 года</strong>
         <small>Сначала копим, потом 100 тысяч ₽ каждый месяц</small>
+      </button>
+      <button class="choice" id="btn-v3a" type="button" data-key="v3a">
+        <span class="tag">Только вклад</span>
+        <strong>Вариант 3a — пенсия сразу</strong>
+        <small>Все 20 млн на депозите, без ОФЗ</small>
+      </button>
+      <button class="choice" id="btn-v3b" type="button" data-key="v3b">
+        <span class="tag">Только вклад</span>
+        <strong>Вариант 3b — пенсия через 3 года</strong>
+        <small>Все 20 млн на депозите, без ОФЗ</small>
       </button>
     </div>
 
@@ -263,14 +285,15 @@
     const mln = (n) => (n / 1_000_000).toFixed(1).replace(".", ",") + " млн ₽";
 
     function view(s) {
+      const onlyDep = !!s.deposit_only;
       const depPct = Math.round((s.dep0 / 20_000_000) * 100);
       const iisPct = 100 - depPct;
       const body = s.years.map((y) => {
-        const cls = y.lump > 0 ? "highlight" : (y.year === 2031 ? "good" : "");
+        const cls = y.lump > 0 ? "highlight" : (!onlyDep && y.year === 2031 ? "good" : "");
         return `<tr class="${cls}">
           <td>${y.year}</td>
           <td>${fmt(y.dep_end)}</td>
-          <td>${fmt(y.iis_end)}</td>
+          <td>${onlyDep ? "—" : fmt(y.iis_end)}</td>
           <td>${y.pension ? fmt(y.pension) : "—"}</td>
           <td>${y.lump ? fmt(y.lump) : "—"}</td>
           <td>${fmt(y.tax)}</td>
@@ -284,7 +307,47 @@
       const step2title = s.pension_from_month === 1 ? "Каждый месяц сразу" : "Первые 3 года";
       const step2text = s.pension_from_month === 1
         ? "Получаем 100 тысяч ₽ на жизнь с вклада."
-        : "Пенсию не снимаем — проценты копятся на вкладе и в ИИС.";
+        : (onlyDep
+          ? "Пенсию не снимаем — проценты копятся на вкладе."
+          : "Пенсию не снимаем — проценты копятся на вкладе и в ИИС.");
+      const step1 = onlyDep
+        ? "Кладём все 20 миллионов на банковские вклады."
+        : "Делим деньги: часть во вклад, часть в ИИС.";
+      const step4title = onlyDep ? "Дальше до 2040" : "С 2031 года";
+      const step4text = onlyDep
+        ? "Продолжаем жить на проценты вклада. ОФЗ нет — рывка капитала не будет."
+        : "Закрываем ИИС. Всё вместе продолжает кормить пенсию.";
+      const piles = onlyDep
+        ? `<div class="pile">
+                  <div>
+                    <div class="name">Банковский вклад</div>
+                    <div class="sub">Всё здесь: пенсия и 10 млн</div>
+                  </div>
+                  <div class="amt">${mln(s.dep0)}</div>
+                </div>`
+        : `<div class="pile">
+                  <div>
+                    <div class="name">Банковский вклад</div>
+                    <div class="sub">Отсюда пенсия и 10 млн</div>
+                  </div>
+                  <div class="amt">${mln(s.dep0)}</div>
+                </div>
+                <div class="pile iis">
+                  <div>
+                    <div class="name">ИИС — гособлигации</div>
+                    <div class="sub">Растёт до 2031, потом можно забрать</div>
+                  </div>
+                  <div class="amt">${mln(s.iis0)}</div>
+                </div>`;
+      const bar = onlyDep
+        ? `<div class="bar" aria-hidden="true"><span class="dep" style="width:100%"></span></div>`
+        : `<div class="bar" aria-hidden="true">
+                <span class="dep" style="width:${depPct}%"></span>
+                <span class="iis" style="width:${iisPct}%"></span>
+              </div>`;
+      const noteExtra = onlyDep
+        ? "Жёлтая строка — год, когда забираем 10 млн. ОФЗ/ИИС в этом варианте нет."
+        : "Жёлтая строка — год, когда забираем 10 млн. Зелёная — год, когда деньги с ИИС переходят на вклад.";
 
       return `
         <div class="panel">
@@ -309,26 +372,8 @@
           <div class="split">
             <div class="block">
               <h2>Куда кладём 20 млн</h2>
-              <div class="piles">
-                <div class="pile">
-                  <div>
-                    <div class="name">Банковский вклад</div>
-                    <div class="sub">Отсюда пенсия и 10 млн</div>
-                  </div>
-                  <div class="amt">${mln(s.dep0)}</div>
-                </div>
-                <div class="pile iis">
-                  <div>
-                    <div class="name">ИИС — гособлигации</div>
-                    <div class="sub">Растёт до 2031, потом можно забрать</div>
-                  </div>
-                  <div class="amt">${mln(s.iis0)}</div>
-                </div>
-              </div>
-              <div class="bar" aria-hidden="true">
-                <span class="dep" style="width:${depPct}%"></span>
-                <span class="iis" style="width:${iisPct}%"></span>
-              </div>
+              <div class="piles">${piles}</div>
+              ${bar}
             </div>
 
             <div class="block">
@@ -338,7 +383,7 @@
                   <div class="n">1</div>
                   <div>
                     <div class="t">Сейчас</div>
-                    <div class="d">Делим деньги: часть во вклад, часть в ИИС.</div>
+                    <div class="d">${step1}</div>
                   </div>
                 </li>
                 <li>
@@ -358,8 +403,8 @@
                 <li>
                   <div class="n">4</div>
                   <div>
-                    <div class="t">С 2031 года</div>
-                    <div class="d">Закрываем ИИС. Всё вместе продолжает кормить пенсию.</div>
+                    <div class="t">${step4title}</div>
+                    <div class="d">${step4text}</div>
                   </div>
                 </li>
               </ol>
@@ -384,8 +429,7 @@
             </table>
           </div>
           <p class="note">
-            Жёлтая строка — год, когда забираем 10 млн.
-            Зелёная — год, когда деньги с ИИС переходят на вклад.
+            ${noteExtra}
             Всего на пенсию за весь срок: <strong>${fmt(s.total_pension)} ₽</strong>.
             Налоги с процентов по вкладу: <strong>${fmt(s.total_tax)} ₽</strong>.
           </p>
@@ -393,19 +437,18 @@
     }
 
     const app = document.getElementById("app");
-    const btn1 = document.getElementById("btn-v1");
-    const btn2 = document.getElementById("btn-v2");
+    const buttons = ["v1", "v2", "v3a", "v3b"].map((k) => document.getElementById("btn-" + k));
 
     function show(key) {
+      if (!DATA[key]) key = "v1";
       app.innerHTML = view(DATA[key]);
-      btn1.classList.toggle("active", key === "v1");
-      btn2.classList.toggle("active", key === "v2");
+      buttons.forEach((btn) => btn.classList.toggle("active", btn.dataset.key === key));
       history.replaceState(null, "", "#" + key);
     }
 
-    btn1.addEventListener("click", () => show("v1"));
-    btn2.addEventListener("click", () => show("v2"));
-    show(location.hash === "#v2" ? "v2" : "v1");
+    buttons.forEach((btn) => btn.addEventListener("click", () => show(btn.dataset.key)));
+    const start = location.hash.replace("#", "");
+    show(["v1", "v2", "v3a", "v3b"].includes(start) ? start : "v1");
   </script>
 </body>
 </html>

@@ -14,14 +14,22 @@ import cashflow_yearly as cf  # noqa: E402
 OUT = ROOT / "dashboard"
 
 
-def scenario(pension_from_month: int, dep0: float, rows: list, key: str, title: str) -> dict:
-    y28 = next(r for r in rows if r.year == 2028)
+def scenario(
+    pension_from_month: int,
+    dep0: float,
+    rows: list,
+    key: str,
+    title: str,
+    *,
+    deposit_only: bool = False,
+) -> dict:
     y40 = rows[-1]
     return {
         "key": key,
         "title": title,
         "dep0": round(dep0),
         "iis0": round(cf.TOTAL - dep0),
+        "deposit_only": deposit_only,
         "pension_from_month": pension_from_month,
         "total_2040": round(y40.total_end),
         "total_pension": round(sum(r.dep_pension for r in rows)),
@@ -44,12 +52,26 @@ def scenario(pension_from_month: int, dep0: float, rows: list, key: str, title: 
 def main() -> None:
     dep_v1 = min(cf.TOTAL, cf.find_min_dep0(1) + 10_000)
     dep_v2 = min(cf.TOTAL, cf.find_min_dep0(37) + 10_000)
+    dep_v3 = cf.TOTAL
     rows_v1 = cf.simulate(dep_v1, 1)
     rows_v2 = cf.simulate(dep_v2, 37)
+    rows_v3a = cf.simulate(dep_v3, 1)
+    rows_v3b = cf.simulate(dep_v3, 37)
 
     data = {
-        "v1": scenario(1, dep_v1, rows_v1, "v1", "Пенсия сразу"),
-        "v2": scenario(37, dep_v2, rows_v2, "v2", "Пенсия через 3 года"),
+        "v1": scenario(1, dep_v1, rows_v1, "v1", "Пенсия сразу + ИИС"),
+        "v2": scenario(37, dep_v2, rows_v2, "v2", "Пенсия через 3 года + ИИС"),
+        "v3a": scenario(
+            1, dep_v3, rows_v3a, "v3a", "Только вклад, пенсия сразу", deposit_only=True
+        ),
+        "v3b": scenario(
+            37,
+            dep_v3,
+            rows_v3b,
+            "v3b",
+            "Только вклад, пенсия через 3 года",
+            deposit_only=True,
+        ),
     }
 
     template = (OUT / "index.template.html").read_text(encoding="utf-8")
