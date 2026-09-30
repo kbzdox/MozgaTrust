@@ -225,7 +225,7 @@
 
 ## 9. Связанные файлы
 
-- [CASHFLOW.md](CASHFLOW.md) — детальный кэшфлоу по годам и графики
+- [CASHFLOW.md](CASHFLOW.md) — таблицы кэшфлоу по сценариям (депозит / ИИС / выводы)
 - [ASSUMPTIONS.md](ASSUMPTIONS.md) — источники ставок и правил
 - [../data/scenarios.csv](../data/scenarios.csv) — таблица сценариев
 - [../data/cashflow_base.csv](../data/cashflow_base.csv) — кэшфлоу путь A
