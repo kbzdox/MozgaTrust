@@ -22,14 +22,19 @@ def scenario(
     title: str,
     *,
     deposit_only: bool = False,
+    v4_split: bool = False,
+    iis0: float | None = None,
 ) -> dict:
     y40 = rows[-1]
-    return {
+    if iis0 is None:
+        iis0 = 0.0 if deposit_only else cf.TOTAL - dep0
+    out = {
         "key": key,
         "title": title,
         "dep0": round(dep0),
-        "iis0": round(cf.TOTAL - dep0),
+        "iis0": round(iis0),
         "deposit_only": deposit_only,
+        "v4_split": v4_split,
         "pension_from_month": pension_from_month,
         "total_2040": round(y40.total_end),
         "total_pension": round(sum(r.dep_pension for r in rows)),
@@ -38,6 +43,8 @@ def scenario(
             {
                 "year": r.year,
                 "dep_end": round(r.dep_end),
+                "dep_a_end": round(r.dep_a_end) if r.split_deps else None,
+                "dep_b_end": round(r.dep_b_end) if r.split_deps else None,
                 "iis_end": round(r.iis_end),
                 "pension": round(r.dep_pension),
                 "lump": round(r.dep_lump),
@@ -47,16 +54,23 @@ def scenario(
             for r in rows
         ],
     }
+    if v4_split:
+        out["dep_a0"] = round(cf.V4_DEP_EACH)
+        out["dep_b0"] = round(cf.V4_DEP_EACH)
+    return out
 
 
 def main() -> None:
     dep_v1 = min(cf.TOTAL, cf.find_min_dep0(1) + 10_000)
     dep_v2 = min(cf.TOTAL, cf.find_min_dep0(37) + 10_000)
     dep_v3 = cf.TOTAL
+    dep_v4 = cf.TOTAL - cf.V4_IIS0
     rows_v1 = cf.simulate(dep_v1, 1)
     rows_v2 = cf.simulate(dep_v2, 37)
     rows_v3a = cf.simulate(dep_v3, 1)
     rows_v3b = cf.simulate(dep_v3, 37)
+    rows_v4a = cf.simulate_v4(1)
+    rows_v4b = cf.simulate_v4(37)
 
     data = {
         "v1": scenario(1, dep_v1, rows_v1, "v1", "Пенсия сразу + ИИС"),
@@ -71,6 +85,24 @@ def main() -> None:
             "v3b",
             "Только вклад, пенсия через 3 года",
             deposit_only=True,
+        ),
+        "v4a": scenario(
+            1,
+            dep_v4,
+            rows_v4a,
+            "v4a",
+            "25% ОФЗ + 2 вклада, пенсия сразу",
+            v4_split=True,
+            iis0=cf.V4_IIS0,
+        ),
+        "v4b": scenario(
+            37,
+            dep_v4,
+            rows_v4b,
+            "v4b",
+            "25% ОФЗ + 2 вклада, пенсия через 3 года",
+            v4_split=True,
+            iis0=cf.V4_IIS0,
         ),
     }
 

@@ -62,15 +62,20 @@
       margin-bottom: 28px;
       animation: rise .7s ease .14s both;
     }
+    @media (min-width: 900px) {
+      .chooser { grid-template-columns: 1fr 1fr 1fr; }
+    }
     @media (max-width: 720px) {
       html { font-size: 18px; }
       .chooser { grid-template-columns: 1fr; }
       .hero-facts, .split { grid-template-columns: 1fr !important; }
     }
+    .choice { padding: 18px; }
+    .choice strong { font-size: 1.15rem; }
     .choice .tag {
       display: inline-block;
       margin-bottom: 8px;
-      font-size: .8rem;
+      font-size: .75rem;
       font-weight: 800;
       letter-spacing: .02em;
       text-transform: uppercase;
@@ -98,7 +103,7 @@
       box-shadow: 5px 5px 0 #000;
     }
     .choice.active small { color: #ffffff; }
-    .choice strong { display: block; font-size: 1.4rem; font-weight: 800; line-height: 1.2; }
+    .choice strong { display: block; font-size: 1.15rem; font-weight: 800; line-height: 1.2; }
     .choice small { display: block; color: #000; font-size: .95rem; margin-top: 8px; line-height: 1.35; font-weight: 800; }
     .hero-facts {
       display: grid;
@@ -255,23 +260,33 @@
     <div class="chooser" role="tablist" aria-label="Выбор варианта">
       <button class="choice active" id="btn-v1" type="button" data-key="v1">
         <span class="tag">Вклад + ИИС</span>
-        <strong>Вариант 1 — пенсия сразу</strong>
-        <small>100 тысяч ₽ каждый месяц с первого месяца</small>
+        <strong>1 — пенсия сразу</strong>
+        <small>Оптимум: максимум в ОФЗ</small>
       </button>
       <button class="choice" id="btn-v2" type="button" data-key="v2">
         <span class="tag">Вклад + ИИС</span>
-        <strong>Вариант 2 — пенсия через 3 года</strong>
-        <small>Сначала копим, потом 100 тысяч ₽ каждый месяц</small>
+        <strong>2 — пенсия через 3 года</strong>
+        <small>Оптимум: максимум в ОФЗ</small>
       </button>
       <button class="choice" id="btn-v3a" type="button" data-key="v3a">
         <span class="tag">Только вклад</span>
-        <strong>Вариант 3a — пенсия сразу</strong>
-        <small>Все 20 млн на депозите, без ОФЗ</small>
+        <strong>3a — пенсия сразу</strong>
+        <small>Без ОФЗ</small>
       </button>
       <button class="choice" id="btn-v3b" type="button" data-key="v3b">
         <span class="tag">Только вклад</span>
-        <strong>Вариант 3b — пенсия через 3 года</strong>
-        <small>Все 20 млн на депозите, без ОФЗ</small>
+        <strong>3b — пенсия через 3 года</strong>
+        <small>Без ОФЗ</small>
+      </button>
+      <button class="choice" id="btn-v4a" type="button" data-key="v4a">
+        <span class="tag">25% ОФЗ + 2 вклада</span>
+        <strong>4a — пенсия сразу</strong>
+        <small>A и B по 7,5 млн отдельно</small>
+      </button>
+      <button class="choice" id="btn-v4b" type="button" data-key="v4b">
+        <span class="tag">25% ОФЗ + 2 вклада</span>
+        <strong>4b — пенсия через 3 года</strong>
+        <small>A и B по 7,5 млн отдельно</small>
       </button>
     </div>
 
@@ -281,18 +296,23 @@
 
   <script>
     const DATA = __DATA__;
+    const KEYS = ["v1", "v2", "v3a", "v3b", "v4a", "v4b"];
     const fmt = (n) => new Intl.NumberFormat("ru-RU").format(Math.round(n));
     const mln = (n) => (n / 1_000_000).toFixed(1).replace(".", ",") + " млн ₽";
 
     function view(s) {
       const onlyDep = !!s.deposit_only;
+      const v4 = !!s.v4_split;
       const depPct = Math.round((s.dep0 / 20_000_000) * 100);
       const iisPct = 100 - depPct;
       const body = s.years.map((y) => {
-        const cls = y.lump > 0 ? "highlight" : (!onlyDep && y.year === 2031 ? "good" : "");
+        const cls = y.lump > 0 ? "highlight" : ((!onlyDep && y.year === 2031) ? "good" : "");
+        const depCell = v4
+          ? `${fmt(y.dep_a_end)} / ${fmt(y.dep_b_end)}`
+          : fmt(y.dep_end);
         return `<tr class="${cls}">
           <td>${y.year}</td>
-          <td>${fmt(y.dep_end)}</td>
+          <td>${depCell}</td>
           <td>${onlyDep ? "—" : fmt(y.iis_end)}</td>
           <td>${y.pension ? fmt(y.pension) : "—"}</td>
           <td>${y.lump ? fmt(y.lump) : "—"}</td>
@@ -305,49 +325,68 @@
         ? "С первого месяца"
         : "С 2029 года (после 3 лет)";
       const step2title = s.pension_from_month === 1 ? "Каждый месяц сразу" : "Первые 3 года";
-      const step2text = s.pension_from_month === 1
-        ? "Получаем 100 тысяч ₽ на жизнь с вклада."
-        : (onlyDep
-          ? "Пенсию не снимаем — проценты копятся на вкладе."
-          : "Пенсию не снимаем — проценты копятся на вкладе и в ИИС.");
-      const step1 = onlyDep
-        ? "Кладём все 20 миллионов на банковские вклады."
-        : "Делим деньги: часть во вклад, часть в ИИС.";
-      const step4title = onlyDep ? "Дальше до 2040" : "С 2031 года";
-      const step4text = onlyDep
-        ? "Продолжаем жить на проценты вклада. ОФЗ нет — рывка капитала не будет."
-        : "Закрываем ИИС. Всё вместе продолжает кормить пенсию.";
-      const piles = onlyDep
-        ? `<div class="pile">
-                  <div>
-                    <div class="name">Банковский вклад</div>
-                    <div class="sub">Всё здесь: пенсия и 10 млн</div>
-                  </div>
+      let step1, step2text, step4title, step4text, piles, bar, noteExtra, depHead;
+      if (v4) {
+        step1 = "5 млн в ОФЗ на ИИС; остальные 15 млн — два вклада A и B по 7,5 млн, каждым управляем отдельно.";
+        step2text = s.pension_from_month === 1
+          ? "100 тысяч снимаем поровну с вкладов A и B."
+          : "Пенсию не снимаем — проценты копятся на A, B и в ИИС.";
+        step4title = "С 2031 года";
+        step4text = "Закрываем ИИС и делим пополам между вкладами A и B.";
+        piles = `<div class="pile iis">
+                  <div><div class="name">ИИС — ОФЗ (макс. 25%)</div><div class="sub">Длинный рост до 2031</div></div>
+                  <div class="amt">${mln(s.iis0)}</div>
+                </div>
+                <div class="pile">
+                  <div><div class="name">Депозит A</div><div class="sub">Короткие вклады, своё управление</div></div>
+                  <div class="amt">${mln(s.dep_a0)}</div>
+                </div>
+                <div class="pile">
+                  <div><div class="name">Депозит B</div><div class="sub">Короткие вклады, своё управление</div></div>
+                  <div class="amt">${mln(s.dep_b0)}</div>
+                </div>`;
+        bar = `<div class="bar" aria-hidden="true">
+                <span class="iis" style="width:25%"></span>
+                <span class="dep" style="width:75%"></span>
+              </div>`;
+        noteExtra = "Жёлтая — год −10 млн. Зелёная — закрытие ИИС (делим в A и B). В колонке вклада: A / B.";
+        depHead = "Вклад A / B";
+      } else if (onlyDep) {
+        step1 = "Кладём все 20 миллионов на банковские вклады.";
+        step2text = s.pension_from_month === 1
+          ? "Получаем 100 тысяч ₽ на жизнь с вклада."
+          : "Пенсию не снимаем — проценты копятся на вкладе.";
+        step4title = "Дальше до 2040";
+        step4text = "Продолжаем жить на проценты вклада. ОФЗ нет — рывка капитала не будет.";
+        piles = `<div class="pile">
+                  <div><div class="name">Банковский вклад</div><div class="sub">Всё здесь: пенсия и 10 млн</div></div>
                   <div class="amt">${mln(s.dep0)}</div>
-                </div>`
-        : `<div class="pile">
-                  <div>
-                    <div class="name">Банковский вклад</div>
-                    <div class="sub">Отсюда пенсия и 10 млн</div>
-                  </div>
+                </div>`;
+        bar = `<div class="bar" aria-hidden="true"><span class="dep" style="width:100%"></span></div>`;
+        noteExtra = "Жёлтая строка — год, когда забираем 10 млн. ОФЗ/ИИС в этом варианте нет.";
+        depHead = "На вкладе";
+      } else {
+        step1 = "Делим деньги: часть во вклад, часть в ИИС.";
+        step2text = s.pension_from_month === 1
+          ? "Получаем 100 тысяч ₽ на жизнь с вклада."
+          : "Пенсию не снимаем — проценты копятся на вкладе и в ИИС.";
+        step4title = "С 2031 года";
+        step4text = "Закрываем ИИС. Всё вместе продолжает кормить пенсию.";
+        piles = `<div class="pile">
+                  <div><div class="name">Банковский вклад</div><div class="sub">Отсюда пенсия и 10 млн</div></div>
                   <div class="amt">${mln(s.dep0)}</div>
                 </div>
                 <div class="pile iis">
-                  <div>
-                    <div class="name">ИИС — гособлигации</div>
-                    <div class="sub">Растёт до 2031, потом можно забрать</div>
-                  </div>
+                  <div><div class="name">ИИС — гособлигации</div><div class="sub">Растёт до 2031, потом можно забрать</div></div>
                   <div class="amt">${mln(s.iis0)}</div>
                 </div>`;
-      const bar = onlyDep
-        ? `<div class="bar" aria-hidden="true"><span class="dep" style="width:100%"></span></div>`
-        : `<div class="bar" aria-hidden="true">
+        bar = `<div class="bar" aria-hidden="true">
                 <span class="dep" style="width:${depPct}%"></span>
                 <span class="iis" style="width:${iisPct}%"></span>
               </div>`;
-      const noteExtra = onlyDep
-        ? "Жёлтая строка — год, когда забираем 10 млн. ОФЗ/ИИС в этом варианте нет."
-        : "Жёлтая строка — год, когда забираем 10 млн. Зелёная — год, когда деньги с ИИС переходят на вклад.";
+        noteExtra = "Жёлтая строка — год, когда забираем 10 млн. Зелёная — год, когда деньги с ИИС переходят на вклад.";
+        depHead = "На вкладе";
+      }
 
       return `
         <div class="panel">
@@ -397,7 +436,7 @@
                   <div class="n">3</div>
                   <div>
                     <div class="t">Через 3 года</div>
-                    <div class="d">Забираем ещё 10 миллионов с вклада.</div>
+                    <div class="d">Забираем ещё 10 миллионов с вкладов.</div>
                   </div>
                 </li>
                 <li>
@@ -417,7 +456,7 @@
               <thead>
                 <tr>
                   <th>Год</th>
-                  <th>На вкладе</th>
+                  <th>${depHead}</th>
                   <th>На ИИС</th>
                   <th>Пенсия за год</th>
                   <th>Ещё забрали</th>
@@ -437,7 +476,7 @@
     }
 
     const app = document.getElementById("app");
-    const buttons = ["v1", "v2", "v3a", "v3b"].map((k) => document.getElementById("btn-" + k));
+    const buttons = KEYS.map((k) => document.getElementById("btn-" + k));
 
     function show(key) {
       if (!DATA[key]) key = "v1";
@@ -448,7 +487,7 @@
 
     buttons.forEach((btn) => btn.addEventListener("click", () => show(btn.dataset.key)));
     const start = location.hash.replace("#", "");
-    show(["v1", "v2", "v3a", "v3b"].includes(start) ? start : "v1");
+    show(KEYS.includes(start) ? start : "v1");
   </script>
 </body>
 </html>
