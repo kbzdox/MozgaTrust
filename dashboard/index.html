@@ -327,30 +327,30 @@
       const step2title = s.pension_from_month === 1 ? "Каждый месяц сразу" : "Первые 3 года";
       let step1, step2text, step4title, step4text, piles, bar, noteExtra, depHead;
       if (v4) {
-        step1 = "5 млн в ОФЗ на ИИС; остальные 15 млн — два вклада A и B по 7,5 млн, каждым управляем отдельно.";
+        step1 = "5 миллионов в облигации. Остальные 15 — два вклада по 7,5 млн, каждым управляем отдельно.";
         step2text = s.pension_from_month === 1
-          ? "100 тысяч снимаем поровну с вкладов A и B."
-          : "Пенсию не снимаем — проценты копятся на A, B и в ИИС.";
+          ? "100 тысяч снимаем с двух вкладов (поровну)."
+          : "Пока копим: проценты растут на вкладах и в облигациях.";
         step4title = "С 2031 года";
-        step4text = "Закрываем ИИС и делим пополам между вкладами A и B.";
+        step4text = "Облигации можно забрать и добавить к вкладам.";
         piles = `<div class="pile iis">
-                  <div><div class="name">ИИС — ОФЗ (макс. 25%)</div><div class="sub">Длинный рост до 2031</div></div>
+                  <div><div class="name">Облигации (четверть)</div><div class="sub">5 млн, трогаем примерно с 2031</div></div>
                   <div class="amt">${mln(s.iis0)}</div>
                 </div>
                 <div class="pile">
-                  <div><div class="name">Депозит A</div><div class="sub">Короткие вклады, своё управление</div></div>
+                  <div><div class="name">Вклад №1</div><div class="sub">7,5 млн, можно быстро снять</div></div>
                   <div class="amt">${mln(s.dep_a0)}</div>
                 </div>
                 <div class="pile">
-                  <div><div class="name">Депозит B</div><div class="sub">Короткие вклады, своё управление</div></div>
+                  <div><div class="name">Вклад №2</div><div class="sub">7,5 млн, управляем отдельно</div></div>
                   <div class="amt">${mln(s.dep_b0)}</div>
                 </div>`;
         bar = `<div class="bar" aria-hidden="true">
                 <span class="iis" style="width:25%"></span>
                 <span class="dep" style="width:75%"></span>
               </div>`;
-        noteExtra = "Жёлтая — год −10 млн. Зелёная — закрытие ИИС (делим в A и B). В колонке вклада: A / B.";
-        depHead = "Вклад A / B";
+        noteExtra = "Жёлтая строка — забрали 10 млн. Зелёная — облигации перешли на вклады. Во вкладе показано: №1 / №2.";
+        depHead = "Вклад №1 / №2";
       } else if (onlyDep) {
         step1 = "Кладём все 20 миллионов на банковские вклады.";
         step2text = s.pension_from_month === 1
