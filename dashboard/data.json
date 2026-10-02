@@ -5,6 +5,7 @@
     "dep0": 11715361,
     "iis0": 8284639,
     "deposit_only": false,
+    "v4_split": false,
     "pension_from_month": 1,
     "total_2040": 23336529,
     "total_pension": 18000000,
@@ -13,6 +14,8 @@
       {
         "year": 2026,
         "dep_end": 11821255,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 9759869,
         "pension": 1200000,
         "lump": 0,
@@ -22,6 +25,8 @@
       {
         "year": 2027,
         "dep_end": 11997339,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 11497790,
         "pension": 1200000,
         "lump": 0,
@@ -31,6 +36,8 @@
       {
         "year": 2028,
         "dep_end": 2135717,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 13545180,
         "pension": 1200000,
         "lump": 10000000,
@@ -40,6 +47,8 @@
       {
         "year": 2029,
         "dep_end": 1138017,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 15957145,
         "pension": 1200000,
         "lump": 0,
@@ -49,6 +58,8 @@
       {
         "year": 2030,
         "dep_end": 17514,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 18798604,
         "pension": 1200000,
         "lump": 0,
@@ -58,6 +69,8 @@
       {
         "year": 2031,
         "dep_end": 19125779,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -67,6 +80,8 @@
       {
         "year": 2032,
         "dep_end": 19460713,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -76,6 +91,8 @@
       {
         "year": 2033,
         "dep_end": 19822980,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -85,6 +102,8 @@
       {
         "year": 2034,
         "dep_end": 20214813,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -94,6 +113,8 @@
       {
         "year": 2035,
         "dep_end": 20638625,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -103,6 +124,8 @@
       {
         "year": 2036,
         "dep_end": 21097024,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -112,6 +135,8 @@
       {
         "year": 2037,
         "dep_end": 21592834,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -121,6 +146,8 @@
       {
         "year": 2038,
         "dep_end": 22129109,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -130,6 +157,8 @@
       {
         "year": 2039,
         "dep_end": 22709150,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -139,6 +168,8 @@
       {
         "year": 2040,
         "dep_end": 23336529,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -153,6 +184,7 @@
     "dep0": 8659231,
     "iis0": 11340769,
     "deposit_only": false,
+    "v4_split": false,
     "pension_from_month": 37,
     "total_2040": 38532865,
     "total_pension": 14400000,
@@ -161,6 +193,8 @@
       {
         "year": 2026,
         "dep_end": 9674991,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 13360198,
         "pension": 0,
         "lump": 0,
@@ -170,6 +204,8 @@
       {
         "year": 2027,
         "dep_end": 10865760,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 15739224,
         "pension": 0,
         "lump": 0,
@@ -179,6 +215,8 @@
       {
         "year": 2028,
         "dep_end": 2135717,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 18541878,
         "pension": 0,
         "lump": 10000000,
@@ -188,6 +226,8 @@
       {
         "year": 2029,
         "dep_end": 1138017,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 21843596,
         "pension": 1200000,
         "lump": 0,
@@ -197,6 +237,8 @@
       {
         "year": 2030,
         "dep_end": 17514,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 25733244,
         "pension": 1200000,
         "lump": 0,
@@ -206,6 +248,8 @@
       {
         "year": 2031,
         "dep_end": 26626369,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -215,6 +259,8 @@
       {
         "year": 2032,
         "dep_end": 27573440,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -224,6 +270,8 @@
       {
         "year": 2033,
         "dep_end": 28597804,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -233,6 +281,8 @@
       {
         "year": 2034,
         "dep_end": 29705768,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -242,6 +292,8 @@
       {
         "year": 2035,
         "dep_end": 30904155,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -251,6 +303,8 @@
       {
         "year": 2036,
         "dep_end": 32200345,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -260,6 +314,8 @@
       {
         "year": 2037,
         "dep_end": 33602320,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -269,6 +325,8 @@
       {
         "year": 2038,
         "dep_end": 35118712,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -278,6 +336,8 @@
       {
         "year": 2039,
         "dep_end": 36758860,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -287,6 +347,8 @@
       {
         "year": 2040,
         "dep_end": 38532865,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -301,6 +363,7 @@
     "dep0": 20000000,
     "iis0": 0,
     "deposit_only": true,
+    "v4_split": false,
     "pension_from_month": 1,
     "total_2040": 13298156,
     "total_pension": 18000000,
@@ -309,6 +372,8 @@
       {
         "year": 2026,
         "dep_end": 21060300,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -318,6 +383,8 @@
       {
         "year": 2027,
         "dep_end": 22242749,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -327,6 +394,8 @@
       {
         "year": 2028,
         "dep_end": 13561419,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 10000000,
@@ -336,6 +405,8 @@
       {
         "year": 2029,
         "dep_end": 13879982,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -345,6 +416,8 @@
       {
         "year": 2030,
         "dep_end": 14235245,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -354,6 +427,8 @@
       {
         "year": 2031,
         "dep_end": 14171051,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -363,6 +438,8 @@
       {
         "year": 2032,
         "dep_end": 14101619,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -372,6 +449,8 @@
       {
         "year": 2033,
         "dep_end": 14026521,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -381,6 +460,8 @@
       {
         "year": 2034,
         "dep_end": 13945293,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -390,6 +471,8 @@
       {
         "year": 2035,
         "dep_end": 13857436,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -399,6 +482,8 @@
       {
         "year": 2036,
         "dep_end": 13762409,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -408,6 +493,8 @@
       {
         "year": 2037,
         "dep_end": 13659627,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -417,6 +504,8 @@
       {
         "year": 2038,
         "dep_end": 13548456,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -426,6 +515,8 @@
       {
         "year": 2039,
         "dep_end": 13428213,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -435,6 +526,8 @@
       {
         "year": 2040,
         "dep_end": 13298156,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -449,6 +542,7 @@
     "dep0": 20000000,
     "iis0": 0,
     "deposit_only": true,
+    "v4_split": false,
     "pension_from_month": 37,
     "total_2040": 24850084,
     "total_pension": 14400000,
@@ -457,6 +551,8 @@
       {
         "year": 2026,
         "dep_end": 22322239,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 0,
         "lump": 0,
@@ -466,6 +562,8 @@
       {
         "year": 2027,
         "dep_end": 24912005,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 0,
         "lump": 0,
@@ -475,6 +573,8 @@
       {
         "year": 2028,
         "dep_end": 17800117,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 0,
         "lump": 10000000,
@@ -484,6 +584,8 @@
       {
         "year": 2029,
         "dep_end": 18606986,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -493,6 +595,8 @@
       {
         "year": 2030,
         "dep_end": 19506809,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -502,6 +606,8 @@
       {
         "year": 2031,
         "dep_end": 19872838,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -511,6 +617,8 @@
       {
         "year": 2032,
         "dep_end": 20268740,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -520,6 +628,8 @@
       {
         "year": 2033,
         "dep_end": 20696953,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -529,6 +639,8 @@
       {
         "year": 2034,
         "dep_end": 21160113,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -538,6 +650,8 @@
       {
         "year": 2035,
         "dep_end": 21661072,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -547,6 +661,8 @@
       {
         "year": 2036,
         "dep_end": 22202915,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -556,6 +672,8 @@
       {
         "year": 2037,
         "dep_end": 22788980,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -565,6 +683,8 @@
       {
         "year": 2038,
         "dep_end": 23422874,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -574,6 +694,8 @@
       {
         "year": 2039,
         "dep_end": 24108501,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -583,6 +705,8 @@
       {
         "year": 2040,
         "dep_end": 24850084,
+        "dep_a_end": null,
+        "dep_b_end": null,
         "iis_end": 0,
         "pension": 1200000,
         "lump": 0,
@@ -590,5 +714,367 @@
         "total": 24850084
       }
     ]
+  },
+  "v4a": {
+    "key": "v4a",
+    "title": "25% ОФЗ + 2 вклада, пенсия сразу",
+    "dep0": 15000000,
+    "iis0": 5000000,
+    "deposit_only": false,
+    "v4_split": true,
+    "pension_from_month": 1,
+    "total_2040": 19436863,
+    "total_pension": 18000000,
+    "total_tax": 2830026,
+    "years": [
+      {
+        "year": 2026,
+        "dep_end": 15484291,
+        "dep_a_end": 7742145,
+        "dep_b_end": 7742145,
+        "iis_end": 5890341,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 230756,
+        "total": 21374631
+      },
+      {
+        "year": 2027,
+        "dep_end": 16082363,
+        "dep_a_end": 8041181,
+        "dep_b_end": 8041181,
+        "iis_end": 6939223,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 239988,
+        "total": 23021585
+      },
+      {
+        "year": 2028,
+        "dep_end": 6691344,
+        "dep_a_end": 3345672,
+        "dep_b_end": 3345672,
+        "iis_end": 8174877,
+        "pension": 1200000,
+        "lump": 10000000,
+        "tax": 249388,
+        "total": 14866221
+      },
+      {
+        "year": 2029,
+        "dep_end": 6218461,
+        "dep_a_end": 3109230,
+        "dep_b_end": 3109230,
+        "iis_end": 9630562,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 87730,
+        "total": 15849023
+      },
+      {
+        "year": 2030,
+        "dep_end": 5691101,
+        "dep_a_end": 2845550,
+        "dep_b_end": 2845550,
+        "iis_end": 11345458,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 79590,
+        "total": 17036559
+      },
+      {
+        "year": 2031,
+        "dep_end": 17200987,
+        "dep_a_end": 8600493,
+        "dep_b_end": 8600493,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 182960,
+        "total": 17200987
+      },
+      {
+        "year": 2032,
+        "dep_end": 17378834,
+        "dep_a_end": 8689417,
+        "dep_b_end": 8689417,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 184966,
+        "total": 17378834
+      },
+      {
+        "year": 2033,
+        "dep_end": 17571195,
+        "dep_a_end": 8785598,
+        "dep_b_end": 8785598,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 187134,
+        "total": 17571195
+      },
+      {
+        "year": 2034,
+        "dep_end": 17779255,
+        "dep_a_end": 8889628,
+        "dep_b_end": 8889628,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 189480,
+        "total": 17779255
+      },
+      {
+        "year": 2035,
+        "dep_end": 18004296,
+        "dep_a_end": 9002148,
+        "dep_b_end": 9002148,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 192018,
+        "total": 18004296
+      },
+      {
+        "year": 2036,
+        "dep_end": 18247703,
+        "dep_a_end": 9123851,
+        "dep_b_end": 9123851,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 194762,
+        "total": 18247703
+      },
+      {
+        "year": 2037,
+        "dep_end": 18510974,
+        "dep_a_end": 9255487,
+        "dep_b_end": 9255487,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 197730,
+        "total": 18510974
+      },
+      {
+        "year": 2038,
+        "dep_end": 18795732,
+        "dep_a_end": 9397866,
+        "dep_b_end": 9397866,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 200941,
+        "total": 18795732
+      },
+      {
+        "year": 2039,
+        "dep_end": 19103729,
+        "dep_a_end": 9551865,
+        "dep_b_end": 9551865,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 204413,
+        "total": 19103729
+      },
+      {
+        "year": 2040,
+        "dep_end": 19436863,
+        "dep_a_end": 9718431,
+        "dep_b_end": 9718431,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 208169,
+        "total": 19436863
+      }
+    ],
+    "dep_a0": 7500000,
+    "dep_b0": 7500000
+  },
+  "v4b": {
+    "key": "v4b",
+    "title": "25% ОФЗ + 2 вклада, пенсия через 3 года",
+    "dep0": 15000000,
+    "iis0": 5000000,
+    "deposit_only": false,
+    "v4_split": true,
+    "pension_from_month": 37,
+    "total_2040": 30988791,
+    "total_pension": 14400000,
+    "total_tax": 4018245,
+    "years": [
+      {
+        "year": 2026,
+        "dep_end": 16746229,
+        "dep_a_end": 8373115,
+        "dep_b_end": 8373115,
+        "iis_end": 5890341,
+        "pension": 0,
+        "lump": 0,
+        "tax": 240011,
+        "total": 22636570
+      },
+      {
+        "year": 2027,
+        "dep_end": 18751618,
+        "dep_a_end": 9375809,
+        "dep_b_end": 9375809,
+        "iis_end": 6939223,
+        "pension": 0,
+        "lump": 0,
+        "tax": 270966,
+        "total": 25690841
+      },
+      {
+        "year": 2028,
+        "dep_end": 10930042,
+        "dep_a_end": 5465021,
+        "dep_b_end": 5465021,
+        "iis_end": 8174877,
+        "pension": 0,
+        "lump": 10000000,
+        "tax": 304592,
+        "total": 19104919
+      },
+      {
+        "year": 2029,
+        "dep_end": 10945465,
+        "dep_a_end": 5472732,
+        "dep_b_end": 5472732,
+        "iis_end": 9630562,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 160695,
+        "total": 20576027
+      },
+      {
+        "year": 2030,
+        "dep_end": 10962665,
+        "dep_a_end": 5481333,
+        "dep_b_end": 5481333,
+        "iis_end": 11345458,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 160961,
+        "total": 22308123
+      },
+      {
+        "year": 2031,
+        "dep_end": 22902774,
+        "dep_a_end": 11451387,
+        "dep_b_end": 11451387,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 247247,
+        "total": 22902774
+      },
+      {
+        "year": 2032,
+        "dep_end": 23545955,
+        "dep_a_end": 11772978,
+        "dep_b_end": 11772978,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 254498,
+        "total": 23545955
+      },
+      {
+        "year": 2033,
+        "dep_end": 24241628,
+        "dep_a_end": 12120814,
+        "dep_b_end": 12120814,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 262342,
+        "total": 24241628
+      },
+      {
+        "year": 2034,
+        "dep_end": 24994075,
+        "dep_a_end": 12497038,
+        "dep_b_end": 12497038,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 270826,
+        "total": 24994075
+      },
+      {
+        "year": 2035,
+        "dep_end": 25807932,
+        "dep_a_end": 12903966,
+        "dep_b_end": 12903966,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 280002,
+        "total": 25807932
+      },
+      {
+        "year": 2036,
+        "dep_end": 26688209,
+        "dep_a_end": 13344104,
+        "dep_b_end": 13344104,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 289926,
+        "total": 26688209
+      },
+      {
+        "year": 2037,
+        "dep_end": 27640327,
+        "dep_a_end": 13820163,
+        "dep_b_end": 13820163,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 300661,
+        "total": 27640327
+      },
+      {
+        "year": 2038,
+        "dep_end": 28670149,
+        "dep_a_end": 14335075,
+        "dep_b_end": 14335075,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 312272,
+        "total": 28670149
+      },
+      {
+        "year": 2039,
+        "dep_end": 29784017,
+        "dep_a_end": 14892009,
+        "dep_b_end": 14892009,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 324831,
+        "total": 29784017
+      },
+      {
+        "year": 2040,
+        "dep_end": 30988791,
+        "dep_a_end": 15494395,
+        "dep_b_end": 15494395,
+        "iis_end": 0,
+        "pension": 1200000,
+        "lump": 0,
+        "tax": 338414,
+        "total": 30988791
+      }
+    ],
+    "dep_a0": 7500000,
+    "dep_b0": 7500000
   }
 }

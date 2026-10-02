@@ -62,15 +62,20 @@
       margin-bottom: 28px;
       animation: rise .7s ease .14s both;
     }
+    @media (min-width: 900px) {
+      .chooser { grid-template-columns: 1fr 1fr 1fr; }
+    }
     @media (max-width: 720px) {
       html { font-size: 18px; }
       .chooser { grid-template-columns: 1fr; }
       .hero-facts, .split { grid-template-columns: 1fr !important; }
     }
+    .choice { padding: 18px; }
+    .choice strong { font-size: 1.15rem; }
     .choice .tag {
       display: inline-block;
       margin-bottom: 8px;
-      font-size: .8rem;
+      font-size: .75rem;
       font-weight: 800;
       letter-spacing: .02em;
       text-transform: uppercase;
@@ -98,7 +103,7 @@
       box-shadow: 5px 5px 0 #000;
     }
     .choice.active small { color: #ffffff; }
-    .choice strong { display: block; font-size: 1.4rem; font-weight: 800; line-height: 1.2; }
+    .choice strong { display: block; font-size: 1.15rem; font-weight: 800; line-height: 1.2; }
     .choice small { display: block; color: #000; font-size: .95rem; margin-top: 8px; line-height: 1.35; font-weight: 800; }
     .hero-facts {
       display: grid;
@@ -255,23 +260,33 @@
     <div class="chooser" role="tablist" aria-label="Выбор варианта">
       <button class="choice active" id="btn-v1" type="button" data-key="v1">
         <span class="tag">Вклад + ИИС</span>
-        <strong>Вариант 1 — пенсия сразу</strong>
-        <small>100 тысяч ₽ каждый месяц с первого месяца</small>
+        <strong>1 — пенсия сразу</strong>
+        <small>Оптимум: максимум в ОФЗ</small>
       </button>
       <button class="choice" id="btn-v2" type="button" data-key="v2">
         <span class="tag">Вклад + ИИС</span>
-        <strong>Вариант 2 — пенсия через 3 года</strong>
-        <small>Сначала копим, потом 100 тысяч ₽ каждый месяц</small>
+        <strong>2 — пенсия через 3 года</strong>
+        <small>Оптимум: максимум в ОФЗ</small>
       </button>
       <button class="choice" id="btn-v3a" type="button" data-key="v3a">
         <span class="tag">Только вклад</span>
-        <strong>Вариант 3a — пенсия сразу</strong>
-        <small>Все 20 млн на депозите, без ОФЗ</small>
+        <strong>3a — пенсия сразу</strong>
+        <small>Без ОФЗ</small>
       </button>
       <button class="choice" id="btn-v3b" type="button" data-key="v3b">
         <span class="tag">Только вклад</span>
-        <strong>Вариант 3b — пенсия через 3 года</strong>
-        <small>Все 20 млн на депозите, без ОФЗ</small>
+        <strong>3b — пенсия через 3 года</strong>
+        <small>Без ОФЗ</small>
+      </button>
+      <button class="choice" id="btn-v4a" type="button" data-key="v4a">
+        <span class="tag">25% ОФЗ + 2 вклада</span>
+        <strong>4a — пенсия сразу</strong>
+        <small>A и B по 7,5 млн отдельно</small>
+      </button>
+      <button class="choice" id="btn-v4b" type="button" data-key="v4b">
+        <span class="tag">25% ОФЗ + 2 вклада</span>
+        <strong>4b — пенсия через 3 года</strong>
+        <small>A и B по 7,5 млн отдельно</small>
       </button>
     </div>
 
@@ -280,19 +295,24 @@
   </div>
 
   <script>
-    const DATA = {"v1": {"key": "v1", "title": "Пенсия сразу + ИИС", "dep0": 11715361, "iis0": 8284639, "deposit_only": false, "pension_from_month": 1, "total_2040": 23336529, "total_pension": 18000000, "total_tax": 2798895, "years": [{"year": 2026, "dep_end": 11821255, "iis_end": 9759869, "pension": 1200000, "lump": 0, "tax": 174214, "total": 21581124}, {"year": 2027, "dep_end": 11997339, "iis_end": 11497790, "pension": 1200000, "lump": 0, "tax": 176932, "total": 23495129}, {"year": 2028, "dep_end": 2135717, "iis_end": 13545180, "pension": 1200000, "lump": 10000000, "tax": 179068, "total": 15680897}, {"year": 2029, "dep_end": 1138017, "iis_end": 15957145, "pension": 1200000, "lump": 0, "tax": 9309, "total": 17095162}, {"year": 2030, "dep_end": 17514, "iis_end": 18798604, "pension": 1200000, "lump": 0, "tax": 0, "total": 18816118}, {"year": 2031, "dep_end": 19125779, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 204662, "total": 19125779}, {"year": 2032, "dep_end": 19460713, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 208438, "total": 19460713}, {"year": 2033, "dep_end": 19822980, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 212523, "total": 19822980}, {"year": 2034, "dep_end": 20214813, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 216941, "total": 20214813}, {"year": 2035, "dep_end": 20638625, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 221719, "total": 20638625}, {"year": 2036, "dep_end": 21097024, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 226887, "total": 21097024}, {"year": 2037, "dep_end": 21592834, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 232477, "total": 21592834}, {"year": 2038, "dep_end": 22129109, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 238524, "total": 22129109}, {"year": 2039, "dep_end": 22709150, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 245064, "total": 22709150}, {"year": 2040, "dep_end": 23336529, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 252137, "total": 23336529}]}, "v2": {"key": "v2", "title": "Пенсия через 3 года + ИИС", "dep0": 8659231, "iis0": 11340769, "deposit_only": false, "pension_from_month": 37, "total_2040": 38532865, "total_pension": 14400000, "total_tax": 3952133, "years": [{"year": 2026, "dep_end": 9674991, "iis_end": 13360198, "pension": 0, "lump": 0, "tax": 130861, "total": 23035190}, {"year": 2027, "dep_end": 10865760, "iis_end": 15739224, "pension": 0, "lump": 0, "tax": 149241, "total": 26604984}, {"year": 2028, "dep_end": 2135717, "iis_end": 18541878, "pension": 0, "lump": 10000000, "tax": 168844, "total": 20677595}, {"year": 2029, "dep_end": 1138017, "iis_end": 21843596, "pension": 1200000, "lump": 0, "tax": 9309, "total": 22981612}, {"year": 2030, "dep_end": 17514, "iis_end": 25733244, "pension": 1200000, "lump": 0, "tax": 0, "total": 25750758}, {"year": 2031, "dep_end": 26626369, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 289229, "total": 26626369}, {"year": 2032, "dep_end": 27573440, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 299907, "total": 27573440}, {"year": 2033, "dep_end": 28597804, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 311457, "total": 28597804}, {"year": 2034, "dep_end": 29705768, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 323949, "total": 29705768}, {"year": 2035, "dep_end": 30904155, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 337460, "total": 30904155}, {"year": 2036, "dep_end": 32200345, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 352074, "total": 32200345}, {"year": 2037, "dep_end": 33602320, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 367881, "total": 33602320}, {"year": 2038, "dep_end": 35118712, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 384978, "total": 35118712}, {"year": 2039, "dep_end": 36758860, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 403470, "total": 36758860}, {"year": 2040, "dep_end": 38532865, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 423472, "total": 38532865}]}, "v3a": {"key": "v3a", "title": "Только вклад, пенсия сразу", "dep0": 20000000, "iis0": 0, "deposit_only": true, "pension_from_month": 1, "total_2040": 13298156, "total_pension": 18000000, "total_tax": 2868690, "years": [{"year": 2026, "dep_end": 21060300, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 316826, "total": 21060300}, {"year": 2027, "dep_end": 22242749, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 335079, "total": 22242749}, {"year": 2028, "dep_end": 13561419, "iis_end": 0, "pension": 1200000, "lump": 10000000, "tax": 355433, "total": 13561419}, {"year": 2029, "dep_end": 13879982, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 205992, "total": 13879982}, {"year": 2030, "dep_end": 14235245, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 211476, "total": 14235245}, {"year": 2031, "dep_end": 14171051, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 148799, "total": 14171051}, {"year": 2032, "dep_end": 14101619, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 148016, "total": 14101619}, {"year": 2033, "dep_end": 14026521, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 147169, "total": 14026521}, {"year": 2034, "dep_end": 13945293, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 146253, "total": 13945293}, {"year": 2035, "dep_end": 13857436, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 145263, "total": 13857436}, {"year": 2036, "dep_end": 13762409, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 144191, "total": 13762409}, {"year": 2037, "dep_end": 13659627, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 143033, "total": 13659627}, {"year": 2038, "dep_end": 13548456, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 141779, "total": 13548456}, {"year": 2039, "dep_end": 13428213, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 140423, "total": 13428213}, {"year": 2040, "dep_end": 13298156, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 138957, "total": 13298156}]}, "v3b": {"key": "v3b", "title": "Только вклад, пенсия через 3 года", "dep0": 20000000, "iis0": 0, "deposit_only": true, "pension_from_month": 37, "total_2040": 24850084, "total_pension": 14400000, "total_tax": 4056909, "years": [{"year": 2026, "dep_end": 22322239, "iis_end": 0, "pension": 0, "lump": 0, "tax": 326082, "total": 22322239}, {"year": 2027, "dep_end": 24912005, "iis_end": 0, "pension": 0, "lump": 0, "tax": 366057, "total": 24912005}, {"year": 2028, "dep_end": 17800117, "iis_end": 0, "pension": 0, "lump": 10000000, "tax": 410637, "total": 17800117}, {"year": 2029, "dep_end": 18606986, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 278958, "total": 18606986}, {"year": 2030, "dep_end": 19506809, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 292847, "total": 19506809}, {"year": 2031, "dep_end": 19872838, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 213085, "total": 19872838}, {"year": 2032, "dep_end": 20268740, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 217549, "total": 20268740}, {"year": 2033, "dep_end": 20696953, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 222377, "total": 20696953}, {"year": 2034, "dep_end": 21160113, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 227599, "total": 21160113}, {"year": 2035, "dep_end": 21661072, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 233247, "total": 21661072}, {"year": 2036, "dep_end": 22202915, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 239356, "total": 22202915}, {"year": 2037, "dep_end": 22788980, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 245964, "total": 22788980}, {"year": 2038, "dep_end": 23422874, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 253111, "total": 23422874}, {"year": 2039, "dep_end": 24108501, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 260841, "total": 24108501}, {"year": 2040, "dep_end": 24850084, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 269202, "total": 24850084}]}};
+    const DATA = {"v1": {"key": "v1", "title": "Пенсия сразу + ИИС", "dep0": 11715361, "iis0": 8284639, "deposit_only": false, "v4_split": false, "pension_from_month": 1, "total_2040": 23336529, "total_pension": 18000000, "total_tax": 2798895, "years": [{"year": 2026, "dep_end": 11821255, "dep_a_end": null, "dep_b_end": null, "iis_end": 9759869, "pension": 1200000, "lump": 0, "tax": 174214, "total": 21581124}, {"year": 2027, "dep_end": 11997339, "dep_a_end": null, "dep_b_end": null, "iis_end": 11497790, "pension": 1200000, "lump": 0, "tax": 176932, "total": 23495129}, {"year": 2028, "dep_end": 2135717, "dep_a_end": null, "dep_b_end": null, "iis_end": 13545180, "pension": 1200000, "lump": 10000000, "tax": 179068, "total": 15680897}, {"year": 2029, "dep_end": 1138017, "dep_a_end": null, "dep_b_end": null, "iis_end": 15957145, "pension": 1200000, "lump": 0, "tax": 9309, "total": 17095162}, {"year": 2030, "dep_end": 17514, "dep_a_end": null, "dep_b_end": null, "iis_end": 18798604, "pension": 1200000, "lump": 0, "tax": 0, "total": 18816118}, {"year": 2031, "dep_end": 19125779, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 204662, "total": 19125779}, {"year": 2032, "dep_end": 19460713, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 208438, "total": 19460713}, {"year": 2033, "dep_end": 19822980, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 212523, "total": 19822980}, {"year": 2034, "dep_end": 20214813, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 216941, "total": 20214813}, {"year": 2035, "dep_end": 20638625, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 221719, "total": 20638625}, {"year": 2036, "dep_end": 21097024, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 226887, "total": 21097024}, {"year": 2037, "dep_end": 21592834, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 232477, "total": 21592834}, {"year": 2038, "dep_end": 22129109, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 238524, "total": 22129109}, {"year": 2039, "dep_end": 22709150, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 245064, "total": 22709150}, {"year": 2040, "dep_end": 23336529, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 252137, "total": 23336529}]}, "v2": {"key": "v2", "title": "Пенсия через 3 года + ИИС", "dep0": 8659231, "iis0": 11340769, "deposit_only": false, "v4_split": false, "pension_from_month": 37, "total_2040": 38532865, "total_pension": 14400000, "total_tax": 3952133, "years": [{"year": 2026, "dep_end": 9674991, "dep_a_end": null, "dep_b_end": null, "iis_end": 13360198, "pension": 0, "lump": 0, "tax": 130861, "total": 23035190}, {"year": 2027, "dep_end": 10865760, "dep_a_end": null, "dep_b_end": null, "iis_end": 15739224, "pension": 0, "lump": 0, "tax": 149241, "total": 26604984}, {"year": 2028, "dep_end": 2135717, "dep_a_end": null, "dep_b_end": null, "iis_end": 18541878, "pension": 0, "lump": 10000000, "tax": 168844, "total": 20677595}, {"year": 2029, "dep_end": 1138017, "dep_a_end": null, "dep_b_end": null, "iis_end": 21843596, "pension": 1200000, "lump": 0, "tax": 9309, "total": 22981612}, {"year": 2030, "dep_end": 17514, "dep_a_end": null, "dep_b_end": null, "iis_end": 25733244, "pension": 1200000, "lump": 0, "tax": 0, "total": 25750758}, {"year": 2031, "dep_end": 26626369, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 289229, "total": 26626369}, {"year": 2032, "dep_end": 27573440, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 299907, "total": 27573440}, {"year": 2033, "dep_end": 28597804, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 311457, "total": 28597804}, {"year": 2034, "dep_end": 29705768, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 323949, "total": 29705768}, {"year": 2035, "dep_end": 30904155, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 337460, "total": 30904155}, {"year": 2036, "dep_end": 32200345, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 352074, "total": 32200345}, {"year": 2037, "dep_end": 33602320, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 367881, "total": 33602320}, {"year": 2038, "dep_end": 35118712, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 384978, "total": 35118712}, {"year": 2039, "dep_end": 36758860, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 403470, "total": 36758860}, {"year": 2040, "dep_end": 38532865, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 423472, "total": 38532865}]}, "v3a": {"key": "v3a", "title": "Только вклад, пенсия сразу", "dep0": 20000000, "iis0": 0, "deposit_only": true, "v4_split": false, "pension_from_month": 1, "total_2040": 13298156, "total_pension": 18000000, "total_tax": 2868690, "years": [{"year": 2026, "dep_end": 21060300, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 316826, "total": 21060300}, {"year": 2027, "dep_end": 22242749, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 335079, "total": 22242749}, {"year": 2028, "dep_end": 13561419, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 10000000, "tax": 355433, "total": 13561419}, {"year": 2029, "dep_end": 13879982, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 205992, "total": 13879982}, {"year": 2030, "dep_end": 14235245, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 211476, "total": 14235245}, {"year": 2031, "dep_end": 14171051, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 148799, "total": 14171051}, {"year": 2032, "dep_end": 14101619, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 148016, "total": 14101619}, {"year": 2033, "dep_end": 14026521, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 147169, "total": 14026521}, {"year": 2034, "dep_end": 13945293, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 146253, "total": 13945293}, {"year": 2035, "dep_end": 13857436, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 145263, "total": 13857436}, {"year": 2036, "dep_end": 13762409, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 144191, "total": 13762409}, {"year": 2037, "dep_end": 13659627, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 143033, "total": 13659627}, {"year": 2038, "dep_end": 13548456, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 141779, "total": 13548456}, {"year": 2039, "dep_end": 13428213, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 140423, "total": 13428213}, {"year": 2040, "dep_end": 13298156, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 138957, "total": 13298156}]}, "v3b": {"key": "v3b", "title": "Только вклад, пенсия через 3 года", "dep0": 20000000, "iis0": 0, "deposit_only": true, "v4_split": false, "pension_from_month": 37, "total_2040": 24850084, "total_pension": 14400000, "total_tax": 4056909, "years": [{"year": 2026, "dep_end": 22322239, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 0, "lump": 0, "tax": 326082, "total": 22322239}, {"year": 2027, "dep_end": 24912005, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 0, "lump": 0, "tax": 366057, "total": 24912005}, {"year": 2028, "dep_end": 17800117, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 0, "lump": 10000000, "tax": 410637, "total": 17800117}, {"year": 2029, "dep_end": 18606986, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 278958, "total": 18606986}, {"year": 2030, "dep_end": 19506809, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 292847, "total": 19506809}, {"year": 2031, "dep_end": 19872838, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 213085, "total": 19872838}, {"year": 2032, "dep_end": 20268740, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 217549, "total": 20268740}, {"year": 2033, "dep_end": 20696953, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 222377, "total": 20696953}, {"year": 2034, "dep_end": 21160113, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 227599, "total": 21160113}, {"year": 2035, "dep_end": 21661072, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 233247, "total": 21661072}, {"year": 2036, "dep_end": 22202915, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 239356, "total": 22202915}, {"year": 2037, "dep_end": 22788980, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 245964, "total": 22788980}, {"year": 2038, "dep_end": 23422874, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 253111, "total": 23422874}, {"year": 2039, "dep_end": 24108501, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 260841, "total": 24108501}, {"year": 2040, "dep_end": 24850084, "dep_a_end": null, "dep_b_end": null, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 269202, "total": 24850084}]}, "v4a": {"key": "v4a", "title": "25% ОФЗ + 2 вклада, пенсия сразу", "dep0": 15000000, "iis0": 5000000, "deposit_only": false, "v4_split": true, "pension_from_month": 1, "total_2040": 19436863, "total_pension": 18000000, "total_tax": 2830026, "years": [{"year": 2026, "dep_end": 15484291, "dep_a_end": 7742145, "dep_b_end": 7742145, "iis_end": 5890341, "pension": 1200000, "lump": 0, "tax": 230756, "total": 21374631}, {"year": 2027, "dep_end": 16082363, "dep_a_end": 8041181, "dep_b_end": 8041181, "iis_end": 6939223, "pension": 1200000, "lump": 0, "tax": 239988, "total": 23021585}, {"year": 2028, "dep_end": 6691344, "dep_a_end": 3345672, "dep_b_end": 3345672, "iis_end": 8174877, "pension": 1200000, "lump": 10000000, "tax": 249388, "total": 14866221}, {"year": 2029, "dep_end": 6218461, "dep_a_end": 3109230, "dep_b_end": 3109230, "iis_end": 9630562, "pension": 1200000, "lump": 0, "tax": 87730, "total": 15849023}, {"year": 2030, "dep_end": 5691101, "dep_a_end": 2845550, "dep_b_end": 2845550, "iis_end": 11345458, "pension": 1200000, "lump": 0, "tax": 79590, "total": 17036559}, {"year": 2031, "dep_end": 17200987, "dep_a_end": 8600493, "dep_b_end": 8600493, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 182960, "total": 17200987}, {"year": 2032, "dep_end": 17378834, "dep_a_end": 8689417, "dep_b_end": 8689417, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 184966, "total": 17378834}, {"year": 2033, "dep_end": 17571195, "dep_a_end": 8785598, "dep_b_end": 8785598, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 187134, "total": 17571195}, {"year": 2034, "dep_end": 17779255, "dep_a_end": 8889628, "dep_b_end": 8889628, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 189480, "total": 17779255}, {"year": 2035, "dep_end": 18004296, "dep_a_end": 9002148, "dep_b_end": 9002148, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 192018, "total": 18004296}, {"year": 2036, "dep_end": 18247703, "dep_a_end": 9123851, "dep_b_end": 9123851, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 194762, "total": 18247703}, {"year": 2037, "dep_end": 18510974, "dep_a_end": 9255487, "dep_b_end": 9255487, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 197730, "total": 18510974}, {"year": 2038, "dep_end": 18795732, "dep_a_end": 9397866, "dep_b_end": 9397866, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 200941, "total": 18795732}, {"year": 2039, "dep_end": 19103729, "dep_a_end": 9551865, "dep_b_end": 9551865, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 204413, "total": 19103729}, {"year": 2040, "dep_end": 19436863, "dep_a_end": 9718431, "dep_b_end": 9718431, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 208169, "total": 19436863}], "dep_a0": 7500000, "dep_b0": 7500000}, "v4b": {"key": "v4b", "title": "25% ОФЗ + 2 вклада, пенсия через 3 года", "dep0": 15000000, "iis0": 5000000, "deposit_only": false, "v4_split": true, "pension_from_month": 37, "total_2040": 30988791, "total_pension": 14400000, "total_tax": 4018245, "years": [{"year": 2026, "dep_end": 16746229, "dep_a_end": 8373115, "dep_b_end": 8373115, "iis_end": 5890341, "pension": 0, "lump": 0, "tax": 240011, "total": 22636570}, {"year": 2027, "dep_end": 18751618, "dep_a_end": 9375809, "dep_b_end": 9375809, "iis_end": 6939223, "pension": 0, "lump": 0, "tax": 270966, "total": 25690841}, {"year": 2028, "dep_end": 10930042, "dep_a_end": 5465021, "dep_b_end": 5465021, "iis_end": 8174877, "pension": 0, "lump": 10000000, "tax": 304592, "total": 19104919}, {"year": 2029, "dep_end": 10945465, "dep_a_end": 5472732, "dep_b_end": 5472732, "iis_end": 9630562, "pension": 1200000, "lump": 0, "tax": 160695, "total": 20576027}, {"year": 2030, "dep_end": 10962665, "dep_a_end": 5481333, "dep_b_end": 5481333, "iis_end": 11345458, "pension": 1200000, "lump": 0, "tax": 160961, "total": 22308123}, {"year": 2031, "dep_end": 22902774, "dep_a_end": 11451387, "dep_b_end": 11451387, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 247247, "total": 22902774}, {"year": 2032, "dep_end": 23545955, "dep_a_end": 11772978, "dep_b_end": 11772978, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 254498, "total": 23545955}, {"year": 2033, "dep_end": 24241628, "dep_a_end": 12120814, "dep_b_end": 12120814, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 262342, "total": 24241628}, {"year": 2034, "dep_end": 24994075, "dep_a_end": 12497038, "dep_b_end": 12497038, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 270826, "total": 24994075}, {"year": 2035, "dep_end": 25807932, "dep_a_end": 12903966, "dep_b_end": 12903966, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 280002, "total": 25807932}, {"year": 2036, "dep_end": 26688209, "dep_a_end": 13344104, "dep_b_end": 13344104, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 289926, "total": 26688209}, {"year": 2037, "dep_end": 27640327, "dep_a_end": 13820163, "dep_b_end": 13820163, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 300661, "total": 27640327}, {"year": 2038, "dep_end": 28670149, "dep_a_end": 14335075, "dep_b_end": 14335075, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 312272, "total": 28670149}, {"year": 2039, "dep_end": 29784017, "dep_a_end": 14892009, "dep_b_end": 14892009, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 324831, "total": 29784017}, {"year": 2040, "dep_end": 30988791, "dep_a_end": 15494395, "dep_b_end": 15494395, "iis_end": 0, "pension": 1200000, "lump": 0, "tax": 338414, "total": 30988791}], "dep_a0": 7500000, "dep_b0": 7500000}};
+    const KEYS = ["v1", "v2", "v3a", "v3b", "v4a", "v4b"];
     const fmt = (n) => new Intl.NumberFormat("ru-RU").format(Math.round(n));
     const mln = (n) => (n / 1_000_000).toFixed(1).replace(".", ",") + " млн ₽";
 
     function view(s) {
       const onlyDep = !!s.deposit_only;
+      const v4 = !!s.v4_split;
       const depPct = Math.round((s.dep0 / 20_000_000) * 100);
       const iisPct = 100 - depPct;
       const body = s.years.map((y) => {
-        const cls = y.lump > 0 ? "highlight" : (!onlyDep && y.year === 2031 ? "good" : "");
+        const cls = y.lump > 0 ? "highlight" : ((!onlyDep && y.year === 2031) ? "good" : "");
+        const depCell = v4
+          ? `${fmt(y.dep_a_end)} / ${fmt(y.dep_b_end)}`
+          : fmt(y.dep_end);
         return `<tr class="${cls}">
           <td>${y.year}</td>
-          <td>${fmt(y.dep_end)}</td>
+          <td>${depCell}</td>
           <td>${onlyDep ? "—" : fmt(y.iis_end)}</td>
           <td>${y.pension ? fmt(y.pension) : "—"}</td>
           <td>${y.lump ? fmt(y.lump) : "—"}</td>
@@ -305,49 +325,68 @@
         ? "С первого месяца"
         : "С 2029 года (после 3 лет)";
       const step2title = s.pension_from_month === 1 ? "Каждый месяц сразу" : "Первые 3 года";
-      const step2text = s.pension_from_month === 1
-        ? "Получаем 100 тысяч ₽ на жизнь с вклада."
-        : (onlyDep
-          ? "Пенсию не снимаем — проценты копятся на вкладе."
-          : "Пенсию не снимаем — проценты копятся на вкладе и в ИИС.");
-      const step1 = onlyDep
-        ? "Кладём все 20 миллионов на банковские вклады."
-        : "Делим деньги: часть во вклад, часть в ИИС.";
-      const step4title = onlyDep ? "Дальше до 2040" : "С 2031 года";
-      const step4text = onlyDep
-        ? "Продолжаем жить на проценты вклада. ОФЗ нет — рывка капитала не будет."
-        : "Закрываем ИИС. Всё вместе продолжает кормить пенсию.";
-      const piles = onlyDep
-        ? `<div class="pile">
-                  <div>
-                    <div class="name">Банковский вклад</div>
-                    <div class="sub">Всё здесь: пенсия и 10 млн</div>
-                  </div>
+      let step1, step2text, step4title, step4text, piles, bar, noteExtra, depHead;
+      if (v4) {
+        step1 = "5 млн в ОФЗ на ИИС; остальные 15 млн — два вклада A и B по 7,5 млн, каждым управляем отдельно.";
+        step2text = s.pension_from_month === 1
+          ? "100 тысяч снимаем поровну с вкладов A и B."
+          : "Пенсию не снимаем — проценты копятся на A, B и в ИИС.";
+        step4title = "С 2031 года";
+        step4text = "Закрываем ИИС и делим пополам между вкладами A и B.";
+        piles = `<div class="pile iis">
+                  <div><div class="name">ИИС — ОФЗ (макс. 25%)</div><div class="sub">Длинный рост до 2031</div></div>
+                  <div class="amt">${mln(s.iis0)}</div>
+                </div>
+                <div class="pile">
+                  <div><div class="name">Депозит A</div><div class="sub">Короткие вклады, своё управление</div></div>
+                  <div class="amt">${mln(s.dep_a0)}</div>
+                </div>
+                <div class="pile">
+                  <div><div class="name">Депозит B</div><div class="sub">Короткие вклады, своё управление</div></div>
+                  <div class="amt">${mln(s.dep_b0)}</div>
+                </div>`;
+        bar = `<div class="bar" aria-hidden="true">
+                <span class="iis" style="width:25%"></span>
+                <span class="dep" style="width:75%"></span>
+              </div>`;
+        noteExtra = "Жёлтая — год −10 млн. Зелёная — закрытие ИИС (делим в A и B). В колонке вклада: A / B.";
+        depHead = "Вклад A / B";
+      } else if (onlyDep) {
+        step1 = "Кладём все 20 миллионов на банковские вклады.";
+        step2text = s.pension_from_month === 1
+          ? "Получаем 100 тысяч ₽ на жизнь с вклада."
+          : "Пенсию не снимаем — проценты копятся на вкладе.";
+        step4title = "Дальше до 2040";
+        step4text = "Продолжаем жить на проценты вклада. ОФЗ нет — рывка капитала не будет.";
+        piles = `<div class="pile">
+                  <div><div class="name">Банковский вклад</div><div class="sub">Всё здесь: пенсия и 10 млн</div></div>
                   <div class="amt">${mln(s.dep0)}</div>
-                </div>`
-        : `<div class="pile">
-                  <div>
-                    <div class="name">Банковский вклад</div>
-                    <div class="sub">Отсюда пенсия и 10 млн</div>
-                  </div>
+                </div>`;
+        bar = `<div class="bar" aria-hidden="true"><span class="dep" style="width:100%"></span></div>`;
+        noteExtra = "Жёлтая строка — год, когда забираем 10 млн. ОФЗ/ИИС в этом варианте нет.";
+        depHead = "На вкладе";
+      } else {
+        step1 = "Делим деньги: часть во вклад, часть в ИИС.";
+        step2text = s.pension_from_month === 1
+          ? "Получаем 100 тысяч ₽ на жизнь с вклада."
+          : "Пенсию не снимаем — проценты копятся на вкладе и в ИИС.";
+        step4title = "С 2031 года";
+        step4text = "Закрываем ИИС. Всё вместе продолжает кормить пенсию.";
+        piles = `<div class="pile">
+                  <div><div class="name">Банковский вклад</div><div class="sub">Отсюда пенсия и 10 млн</div></div>
                   <div class="amt">${mln(s.dep0)}</div>
                 </div>
                 <div class="pile iis">
-                  <div>
-                    <div class="name">ИИС — гособлигации</div>
-                    <div class="sub">Растёт до 2031, потом можно забрать</div>
-                  </div>
+                  <div><div class="name">ИИС — гособлигации</div><div class="sub">Растёт до 2031, потом можно забрать</div></div>
                   <div class="amt">${mln(s.iis0)}</div>
                 </div>`;
-      const bar = onlyDep
-        ? `<div class="bar" aria-hidden="true"><span class="dep" style="width:100%"></span></div>`
-        : `<div class="bar" aria-hidden="true">
+        bar = `<div class="bar" aria-hidden="true">
                 <span class="dep" style="width:${depPct}%"></span>
                 <span class="iis" style="width:${iisPct}%"></span>
               </div>`;
-      const noteExtra = onlyDep
-        ? "Жёлтая строка — год, когда забираем 10 млн. ОФЗ/ИИС в этом варианте нет."
-        : "Жёлтая строка — год, когда забираем 10 млн. Зелёная — год, когда деньги с ИИС переходят на вклад.";
+        noteExtra = "Жёлтая строка — год, когда забираем 10 млн. Зелёная — год, когда деньги с ИИС переходят на вклад.";
+        depHead = "На вкладе";
+      }
 
       return `
         <div class="panel">
@@ -397,7 +436,7 @@
                   <div class="n">3</div>
                   <div>
                     <div class="t">Через 3 года</div>
-                    <div class="d">Забираем ещё 10 миллионов с вклада.</div>
+                    <div class="d">Забираем ещё 10 миллионов с вкладов.</div>
                   </div>
                 </li>
                 <li>
@@ -417,7 +456,7 @@
               <thead>
                 <tr>
                   <th>Год</th>
-                  <th>На вкладе</th>
+                  <th>${depHead}</th>
                   <th>На ИИС</th>
                   <th>Пенсия за год</th>
                   <th>Ещё забрали</th>
@@ -437,7 +476,7 @@
     }
 
     const app = document.getElementById("app");
-    const buttons = ["v1", "v2", "v3a", "v3b"].map((k) => document.getElementById("btn-" + k));
+    const buttons = KEYS.map((k) => document.getElementById("btn-" + k));
 
     function show(key) {
       if (!DATA[key]) key = "v1";
@@ -448,7 +487,7 @@
 
     buttons.forEach((btn) => btn.addEventListener("click", () => show(btn.dataset.key)));
     const start = location.hash.replace("#", "");
-    show(["v1", "v2", "v3a", "v3b"].includes(start) ? start : "v1");
+    show(KEYS.includes(start) ? start : "v1");
   </script>
 </body>
 </html>
